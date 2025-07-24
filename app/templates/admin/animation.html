@@ -1,0 +1,25 @@
+{% extends "admin/base.html" %}
+
+{% block heading %}Animation: <code>{{ animation.name }} <a href="{{ url_for('routes.admin.edit_animation', name=animation.name) }}">Edit</a></code>{% endblock %}
+
+{% block content %}
+
+<div class="form">
+    <div class="form-group">
+        <label>Name</label>
+        <input value="{{ animation.name }}" disabled>
+        <label>Title</label>
+        <input value="{{ animation.title }}" disabled>
+    </div>
+    <div class="form-group">
+        <label>Content Hash</label>
+        <input value="{{ animation.content_hash }}" disabled>
+        <label>Verify Content</label>
+        <input value="{{ animation.verify_content() }}" disabled>
+    </div>
+    <div class="form-group">
+        <label>Content</label>
+        <textarea id="animation-content" disabled>{{ animation.content }}</textarea>
+    </div>
+</div>
+{% endblock %}

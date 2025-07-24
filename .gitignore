@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+prod_config.py
+test*.py
+
+*.db
+
+app/animations/*

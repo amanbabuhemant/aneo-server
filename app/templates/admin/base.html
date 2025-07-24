@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <title>Aneo Admin</title>
+</head>
+<body>
+
+<div class="dashboard">
+    <aside class="sidebar">
+        <h2 class="logo">Aneo Admin</h2>
+        <nav>
+            <a href="/admin/dashboard" class="nav-item">Dashboard</a>
+            <a href="/admin/new-animation" class="nav-item">New Animation</a>
+            <a href="/admin/animations" class="nav-item">Animations</a>
+            <a href="/admin/logout" class="nav-item">Logout</a>
+        </nav>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+            <h1>{% block heading %}{% endblock %}</h1>
+        </header>
+
+        <section class="content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">
+                {{ message }}
+                <button class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+            </div>
+            {% endfor %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </section>
+    </div>
+</div>
+
+</body>
+</html>
