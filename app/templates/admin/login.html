@@ -1,9 +1,12 @@
-{% extends "admin/base.html" %}
-
-{% block content %}
-<form method="POST">
-    <input type="text" name="username">
-    <input type="password" name="password">
-    <input type="submit" value="Log In">
+<link rel="stylesheet" href="/static/css/admin.css">
+<br><br>
+<form class="form" method="POST">
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username">
+        <label>Password</label>
+        <input type="password" name="password">
+        <label></label>
+        <input type="submit" value="Log In">
+    </div>
 </form>
-{% endblock %}

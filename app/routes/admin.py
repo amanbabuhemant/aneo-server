@@ -1,10 +1,20 @@
-from flask import Blueprint, render_template, session, request, redirect, flash
+from flask import Blueprint, render_template, session, request, redirect, flash, g
 
 from datetime import datetime
 
 from models.animation import Animation
+from models.user import User
 
 admin = Blueprint("admin", __name__, url_prefix="/admin")
+
+@admin.before_request
+def before_request():
+    username = session.get("username", "")
+    user = User.by_username(username)
+    if not user and request.path != "/admin/login":
+        return redirect("/admin/login")
+    g.user = user
+
 
 @admin.route("/")
 @admin.route("/dashboard")
@@ -13,12 +23,38 @@ def dashborad():
 
 @admin.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "POST":
+        username = request.form.get("username", "")
+        password = request.form.get("password", "")
+        user = User.by_username(username)
+        if user and user.match_password(password):
+            session["username"] = username
+            return redirect("/admin")
+
     return render_template("admin/login.html")
+
+@admin.route("/change-password", methods=["GET", "POST"])
+def change_password():
+    if request.method == "POST":
+        password = request.form.get("password", "")
+        n_password = request.form.get("npassword", "")
+        c_password = request.form.get("cpassword", "")
+        user = g.user
+        if not user.match_password(password):
+            flash("Current passowrd did not match", "error")
+            return redirect("/admin/change-password")
+        if n_password != c_password:
+            flash("New and Confirm password did not match", "error")
+            return redirect("/admin/change-password")
+        user.set_password(n_password)
+        flash("Password updated", "success")
+        
+    return render_template("admin/change-password.html")
 
 @admin.route("/logout")
 def logout():
     session.clear()
-    return render_template("/")
+    return redirect("/admin/login")
 
 @admin.route("/new-animation", methods=["GET", "POST"])
 def new_animation():

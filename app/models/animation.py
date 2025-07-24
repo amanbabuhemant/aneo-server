@@ -27,6 +27,8 @@ class Animation(Model):
     @staticmethod
     def valid_name(name: str) -> bool:
         valid_chars = "abcdefghijklmnopqrstuvwxyz-"
+        if not name:
+            return False
         for c in name:
             if c not in valid_chars:
                 return False
