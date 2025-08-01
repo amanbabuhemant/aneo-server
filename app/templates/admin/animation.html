@@ -18,6 +18,9 @@
         <input value="{{ animation.verify_content() }}" disabled>
     </div>
     <div class="form-group">
+        <a href="{{ url_for('routes.admin.revisions_', animation=animation.name) }}">{{ animation.revisions.count() }} Revisions</a>
+    </div>
+    <div class="form-group">
         <label>Content</label>
         <textarea id="animation-content" disabled>{{ animation.content }}</textarea>
     </div>

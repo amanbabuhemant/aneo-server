@@ -4,6 +4,7 @@ from datetime import datetime
 
 from models.animation import Animation
 from models.user import User
+from models.revision import Revision
 
 admin = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -119,4 +120,28 @@ def edit_animation(name):
         flash("Animation updated", "success")
 
     return render_template("admin/edit-animation.html", animation=animation)
+
+@admin.route("/revision")
+def revesions():
+    return render_template("admin/revisions.html", revisions=Revision.select().order_by(Revision.id.desc()))
+
+@admin.route("/revision/<animation>")
+def revisions_(animation):
+    revisions = Revision.get_revisions_for(animation)
+    return render_template("admin/revisions.html", revisions=revisions)
+
+@admin.route("/revision/<animation>/<int:id>", methods=["GET", "POST"])
+def revision_(animation, id):
+    revision = Revision.get_or_none(Revision.id == id)
+    if not revision:
+        return redirect("/revisions/" + animation)
+
+    if request.method == "POST":
+        rollback_id = request.form.get("rollback-id", 0, int)
+        if rollback_id != id:
+            return redirect("/admin")
+        revision.rollback()
+        flash("Animation rollbacked", "success")
+
+    return render_template("admin/revision.html", revision=revision)
 

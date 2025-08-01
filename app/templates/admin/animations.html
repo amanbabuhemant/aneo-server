@@ -5,22 +5,26 @@
 {% block content %}
 
 <table class="table">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Title</th>
-        <th>Status</th>
-        <th>Edit</th>
-    </tr>
-    {% for animation in animations %}
-    <tr>
-        <td>{{ animation.id }}</td>
-        <td><a href="/admin/animations/{{ animation.name }}">{{ animation.name }}</a></td>
-        <td>{{ animation.title }}</td>
-        <td><span style="color:{{ ["red", "green"][animation.active] }}">{{ ["Inactive", "Active"][animation.active] }}</span></td>
-        <td><a href="{{ url_for("routes.admin.edit_animation", name=animation.name) }}">Edit</a>
-    </tr>
-    {% endfor %}
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for animation in animations %}
+        <tr>
+            <td>{{ animation.id }}</td>
+            <td><a href="/admin/animations/{{ animation.name }}">{{ animation.name }}</a></td>
+            <td>{{ animation.title }}</td>
+            <td><span style="color:{{ ["red", "green"][animation.active] }}">{{ ["Inactive", "Active"][animation.active] }}</span></td>
+            <td><a href="{{ url_for("routes.admin.edit_animation", name=animation.name) }}">Edit</a>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
 {% endblock %}

@@ -12,6 +12,11 @@ body {
     color: #333;
 }
 
+a {
+    text-decoration: none;
+    color: #0087d5;
+}
+
 /* Layout */
 .dashboard {
     display: flex;

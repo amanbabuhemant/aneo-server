@@ -9,3 +9,4 @@ test*.py
 *.db
 
 app/animations/*
+app/revisions/*

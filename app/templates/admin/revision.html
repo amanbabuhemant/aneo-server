@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<form class="form" method="POST">
+    <div class="form-group">
+        <label>Revision Timestamp:</label>
+        <input value="{{ revision.timestamp }}" disabled>
+    </div>
+    <div class="form-group">
+        <label>Content</label>
+        <textarea id="animation-content" disabled>{{ revision.content }}</textarea>
+    </div>
+    <div class="form-group">
+        <input type="hidden" name="rollback-id" value="{{ revision.id }}">
+        <button>Rollback</button>
+    </div>
+</form>
+{% endblock %}

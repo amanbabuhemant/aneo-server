@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Animation</th>
+            <th>Size</th>
+            <th>View</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for revision in revisions %}
+        <tr>
+            <td>{{ revision.id }}</td>
+            <td>{{ revision.animation.name }}</td>
+            <td>{{ revision.fsize() }}</th>
+            <td><a href="/admin/revision/{{ revision.animation.name }}/{{ revision.id }}">View</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

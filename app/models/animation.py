@@ -46,6 +46,11 @@ class Animation(Model):
     def content(self):
         return self.get_content()
 
+    @property
+    def revisions(self):
+        from .revision import Revision
+        return Revision.get_revisions_for(self)
+
     @content.setter
     def content(self, content):
         return self.set_content(content)
@@ -68,12 +73,14 @@ class Animation(Model):
         return content
 
     def set_content(self, content):
+        from .revision import Revision
         file = open(self.filepath, "w")
         file.write(content)
         file.close()
         hash = sha256(self.content.encode()).hexdigest()
         self.content_hash = hash
         self.save()
+        Revision.create_for(self)
         return self.verify_content()
 
     def verify_content(self):
