@@ -38,6 +38,14 @@ class Animation(Model):
     def by_name(cls, name):
         return cls.get_or_none(cls.name == name)
 
+    @classmethod
+    def gen_index(cls) -> str:
+        animations = cls.select().where(cls.active==True)
+        index_str = ""
+        for animation in animations:
+            index_str += animation.name + ":" + animation.content_hash + "\n"
+        return index_str
+
     @property
     def filepath(self):
         return "animations/" + self.name + ".lua"
